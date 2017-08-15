@@ -30,7 +30,12 @@ namespace Data
          */
         public List<Company> FindAllCompanies()
         {
-            return new List<Company>();
+            List<Company> allCompanies = new List<Company>();
+            allCompanies.AddRange(IrishCompanies);
+            allCompanies.AddRange(ForeignCompanies);
+            allCompanies.AddRange(SoleTraders);
+
+            return allCompanies;
         }
 
         public IrishCompany GetIrishCompanyByEmployeeName(string employeeName)
