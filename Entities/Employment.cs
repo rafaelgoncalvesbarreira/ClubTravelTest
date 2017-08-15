@@ -16,7 +16,21 @@ namespace Entities
         /// <returns></returns>
         public double NumberOfYearsEmployed
         {
-            get { return 0; }
+            get {
+                var endDate = EmploymentEndDate ?? DateTime.Today;
+             
+                var differenceYear = endDate.Year - EmploymentStartDate.Year;
+                var completeYear = endDate;
+                if (endDate.Month < EmploymentStartDate.Month || (endDate.Month==EmploymentStartDate.Month && endDate.Day<EmploymentStartDate.Day))
+                {
+                    differenceYear--;
+                    completeYear.AddYears(-1);
+                }
+                var daysOfYear = (endDate - completeYear).Days;
+                var differenceDays = (endDate.AddYears(differenceYear) - EmploymentStartDate).Days;
+                var years = (double)differenceYear + (differenceDays / daysOfYear);
+                return years;
+            }
         }
     }
 }
