@@ -91,10 +91,12 @@ namespace Data
             var comp1 = new IrishCompany
             {
                 Name = "Irish1",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
-                ,
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                },
                 Employments = new List<Employment>
                 {
                     new Employment
@@ -130,25 +132,34 @@ namespace Data
             var comp2 = new IrishCompany
             {
                 Name = "Irish2",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                }
             };
 
             var comp3 = new IrishCompany
             {
                 Name = "Irish3",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                }
             };
 
             var comp4 = new IrishCompany
             {
                 Name = "Irish4",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                }
             };
 
             return new List<IrishCompany> {comp1, comp2, comp3, comp4};
@@ -159,10 +170,12 @@ namespace Data
             var comp1 = new ForeignCompany
             {
                 Name = "Foreign1",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
-                ,
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                },
                 Employments = new List<Employment>
                 {
                     new Employment
@@ -198,10 +211,12 @@ namespace Data
             var comp2 = new ForeignCompany
             {
                 Name = "Foreign2",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
-                ,
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                },
                 Employments = new List<Employment>
                 {
                     new Employment
@@ -242,10 +257,12 @@ namespace Data
             var comp1 = new SoleTrader
             {
                 Name = "SoleTrader1",
-                AddressLine1 = "addr1",
-                AddressLine2 = "addr2",
-                AddressLine3 = "addr3"
-                ,
+                Address = new Address
+                {
+                    AddressLine1 = "addr1",
+                    AddressLine2 = "addr2",
+                    AddressLine3 = "addr3"
+                },
                 Employments = new List<Employment>
                 {
                     new Employment
