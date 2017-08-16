@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 
 #IDE folder
 .vs/
+
+#packages
+/packages
