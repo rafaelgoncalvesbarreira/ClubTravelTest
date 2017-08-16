@@ -20,15 +20,18 @@ namespace Entities
                 var endDate = EmploymentEndDate ?? DateTime.Today;
              
                 var differenceYear = endDate.Year - EmploymentStartDate.Year;
-                var completeYear = endDate;
+                var completeYear = EmploymentStartDate.AddYears(differenceYear);
                 if (endDate.Month < EmploymentStartDate.Month || (endDate.Month==EmploymentStartDate.Month && endDate.Day<EmploymentStartDate.Day))
                 {
                     differenceYear--;
-                    completeYear.AddYears(-1);
+                    completeYear = completeYear.AddYears(-1);
                 }
-                var daysOfYear = (endDate - completeYear).Days;
-                var differenceDays = (endDate.AddYears(differenceYear) - EmploymentStartDate).Days;
-                var years = (double)differenceYear + (differenceDays / daysOfYear);
+                var nextCompleteYear = completeYear.AddYears(1);
+                double daysOfYear = (nextCompleteYear - completeYear).Days;
+
+                double remainingDays = (endDate - completeYear).Days;
+                double years = differenceYear + (remainingDays / daysOfYear);
+                
                 return years;
             }
         }
