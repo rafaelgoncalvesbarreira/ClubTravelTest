@@ -94,21 +94,6 @@ namespace Data
             return null;
         }
 
-        public void InsertIrishCompany(IrishCompany company)
-        {
-            IrishCompanies.Add(company);
-        }
-
-        public void InsertForeignCompany(ForeignCompany company)
-        {
-            ForeignCompanies.Add(company);
-        }
-
-        public void InsertSoleTraderCompany(SoleTrader company)
-        {
-            SoleTraders.Add(company);
-        }
-
         #region dummy data
 
         private IEnumerable<IrishCompany> populateIrishCompanies()

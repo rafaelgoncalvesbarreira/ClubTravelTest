@@ -15,12 +15,6 @@
             $scope.companySelectedName = '';
             $scope.companyEmployees = [];
 
-            $scope.newModel = function () {
-                return {
-                    name: '',
-                    companyType:''
-                }
-            }
 
             $scope.newEmployeeModel = function () {
                 return {
@@ -38,31 +32,12 @@
             }
 
             $scope.employeeModel = $scope.newEmployeeModel();
-            $scope.companyModel = $scope.newModel()
 
-            $scope.companyTypes = [
-                { Id:0, Name: "Irish" },
-                { Id: 1, Name: "Foreign Company"},
-                { Id: 2, Name: "Sole Trader"},
-            ]
 
             $http.get(companyApiUrl).success(function (data) {
                 $scope.companies = data
             })
 
-            $scope.showInsertModal = function () {
-                $("#insertModal").modal('show');
-            }
-
-            $scope.save = function () {
-                $http.post(companyApiUrl, $scope.companyModel).then(function (result) {
-                    $("#insertModal").modal('hide');
-                })
-            };
-
-            $scope.showFormItem = function (name) {
-                return $scope.companyModel.CompanyType != '';
-            }
 
             $scope.loadEmployees = function () {
                 $http.get(employmentApiUrl, { params: { 'companyName': $scope.companySelectedName } }).then(function (result) {
@@ -93,9 +68,6 @@
 }
 
 <div ng-app="webapp" ng-controller="CompanyController">
-    <p>
-        <a ng-click="showInsertModal()">+ Add</a>
-    </p>
     <table class="table">
         <thead>
             <tr>
@@ -194,46 +166,5 @@
 
     </div>
 
-    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">New Company</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="type">Company Type:</label>
-                        <select class="form-control" id="type" ng-model="companyModel.companyType">
-                            <option value="" selected></option>
-                            <option ng-repeat="type in companyTypes" value="{{type.Id}}">{{type.Name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" ng-show="companyModel.companyType != ''">
-                        <label for="Name">Name:</label>
-                        <input type="text" id="Name" ng-model="companyModel.name" class="form-control" />
-                    </div>
-                    <span>
-                        {{selectedType.Name}}
-                    </span>
-                    <div class="form-group" ng-show="showForm('EmployerRegisteredNumber')">
-                        <label for="EmployerRegisteredNumber">Employer Registered Number:</label>
-                        <input type="text" id="EmployerRegisteredNumber" class="form-control" />
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" ng-click="save()">Save changes</button>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
 
 </div>
