@@ -1,0 +1,239 @@
+﻿@{
+    var companyApiUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Company" });
+    var employmentApiUrl = Url.HttpRouteUrl("DefaultApi", new { controller = "Employment" });
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/angular")
+    <script type="text/javascript">
+        var webapp = angular.module("webapp", ["ui.directives"]);
+        var companyApiUrl = "@companyApiUrl";
+        var employmentApiUrl = "@employmentApiUrl";
+
+        webapp.controller("CompanyController", function ($scope, $http, $q) {
+            $scope.companies = []
+            $scope.selectedType = '';
+            $scope.companySelectedName = '';
+            $scope.companyEmployees = [];
+
+            $scope.newModel = function () {
+                return {
+                    name: '',
+                    companyType:''
+                }
+            }
+
+            $scope.newEmployeeModel = function () {
+                return {
+                    name: '',
+                    companyName: '',
+                    address: {
+                        addressLine1: '',
+                        addressLine2: '',
+                        addressLine3: '',
+                        addressLine4: '',
+                    },
+                    employmentStartDate: '',
+                    employmentEndDate:''
+                }
+            }
+
+            $scope.employeeModel = $scope.newEmployeeModel();
+            $scope.companyModel = $scope.newModel()
+
+            $scope.companyTypes = [
+                { Id:0, Name: "Irish" },
+                { Id: 1, Name: "Foreign Company"},
+                { Id: 2, Name: "Sole Trader"},
+            ]
+
+            $http.get(companyApiUrl).success(function (data) {
+                $scope.companies = data
+            })
+
+            $scope.showInsertModal = function () {
+                $("#insertModal").modal('show');
+            }
+
+            $scope.save = function () {
+                $http.post(companyApiUrl, $scope.companyModel).then(function (result) {
+                    $("#insertModal").modal('hide');
+                })
+            };
+
+            $scope.showFormItem = function (name) {
+                return $scope.companyModel.CompanyType != '';
+            }
+
+            $scope.loadEmployees = function () {
+                $http.get(employmentApiUrl, { params: { 'companyName': $scope.companySelectedName } }).then(function (result) {
+                    $scope.companyEmployees = result.data;
+                })
+            }
+
+            $scope.showEmployees = function (companyName) {
+                $scope.companySelectedName = companyName;
+                $scope.employeeModel = $scope.newEmployeeModel();
+                $("#employeeModal").modal('show');
+                $scope.loadEmployees();
+            };
+
+            $scope.addEmployee = function () {
+                $scope.employeeModel.companyName = $scope.companySelectedName;
+                $http.post(employmentApiUrl, $scope.employeeModel).then(function () {
+                    $scope.loadEmployees();
+                })
+            }
+
+            $scope.clearEmployeeForm = function () {
+                $scope.employeeModel = $scope.newEmployeeModel();
+            }
+        })
+
+    </script>
+}
+
+<div ng-app="webapp" ng-controller="CompanyController">
+    <p>
+        <a ng-click="showInsertModal()">+ Add</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody ng-cloak>
+            <tr ng-repeat="company in companies">
+                <td>{{company.name}}</td>
+                <td><a ng-click="showEmployees(company.name)">Employees</a> </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-employee" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{companySelectedName}}'s employees</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="employeeForm">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="employeeName">Name of Employee</label>
+                                    <input name="employeeName" class="form-control" ng-model="employeeModel.name" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="employeeName">Start at Company</label>
+                                    <input name="employeeName" class="form-control" ng-model="employeeModel.employmentStartDate" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="employeeName">Left the company</label>
+                                    <input name="employeeName" class="form-control" ng-model="employeeModel.employmentEndDate" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <div class="form-group col-sm-3">
+                                        <label for="">Address</label>
+                                        <input class="form-control" ng-model="employeeModel.address.addressLine1" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" ng-model="employeeModel.address.addressLine2"/>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" ng-model="employeeModel.address.addressLine3"/>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" ng-model="employeeModel.address.addressLine4"/>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary" title="Add" ng-click="addEmployee()">+</button>
+                                    <button type="button" class="btn btn-danger" title="Clear" ng-click="clearEmployeeForm()">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr />
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Adress</th>
+                                <th>Years Employed</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-cloak>
+                            <tr ng-repeat="employee in companyEmployees">
+                                <td>{{employee.name}}</td>
+                                <td>{{employee.address.fullAddress}}</td>
+                                <td>{{employee.numberOfYearsEmployed | number: 1}} years</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-click="save()">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">New Company</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="type">Company Type:</label>
+                        <select class="form-control" id="type" ng-model="companyModel.companyType">
+                            <option value="" selected></option>
+                            <option ng-repeat="type in companyTypes" value="{{type.Id}}">{{type.Name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-show="companyModel.companyType != ''">
+                        <label for="Name">Name:</label>
+                        <input type="text" id="Name" ng-model="companyModel.name" class="form-control" />
+                    </div>
+                    <span>
+                        {{selectedType.Name}}
+                    </span>
+                    <div class="form-group" ng-show="showForm('EmployerRegisteredNumber')">
+                        <label for="EmployerRegisteredNumber">Employer Registered Number:</label>
+                        <input type="text" id="EmployerRegisteredNumber" class="form-control" />
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-click="save()">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

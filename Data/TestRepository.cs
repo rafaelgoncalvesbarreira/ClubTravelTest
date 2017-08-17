@@ -38,6 +38,11 @@ namespace Data
             return allCompanies;
         }
 
+        public Company FindCompanyByName(string companyName)
+        {
+            return FindAllCompanies().Where(c => c.Name.Equals(companyName)).FirstOrDefault();
+        }
+
         public IrishCompany GetIrishCompanyByEmployeeName(string employeeName)
         {
             var comps = populateIrishCompanies().ToList();
@@ -87,6 +92,21 @@ namespace Data
             }
 
             return null;
+        }
+
+        public void InsertIrishCompany(IrishCompany company)
+        {
+            IrishCompanies.Add(company);
+        }
+
+        public void InsertForeignCompany(ForeignCompany company)
+        {
+            ForeignCompanies.Add(company);
+        }
+
+        public void InsertSoleTraderCompany(SoleTrader company)
+        {
+            SoleTraders.Add(company);
         }
 
         #region dummy data
@@ -303,6 +323,8 @@ namespace Data
 
             return new List<SoleTrader> {comp1};
         }
+
+        
 
         #endregion
     }
