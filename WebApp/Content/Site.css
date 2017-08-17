@@ -19,5 +19,8 @@ textarea {
 body .modal .modal-employee {
     /* new custom width */
     width: 800px;
+}
 
+.buttons-group{
+    padding-top: 25px;
 }

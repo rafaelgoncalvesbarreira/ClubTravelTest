@@ -114,22 +114,26 @@
 
                             <div class="row">
                                 <div class="col-sm-10">
-                                    <div class="form-group col-sm-3">
-                                        <label for="">Address</label>
-                                        <input class="form-control" ng-model="employeeModel.address.addressLine1" />
+                                    <div class="row">
+                                        <div class="form-group col-sm-3">
+                                            <label for="">Address 1</label>
+                                            <input class="form-control" ng-model="employeeModel.address.addressLine1" />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label for="">Address 2</label>
+                                            <input class="form-control" ng-model="employeeModel.address.addressLine2" />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label for="">Address 3</label>
+                                            <input class="form-control" ng-model="employeeModel.address.addressLine3" />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label for="">Address 4</label>
+                                            <input class="form-control" ng-model="employeeModel.address.addressLine4" />
+                                        </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" ng-model="employeeModel.address.addressLine2"/>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" ng-model="employeeModel.address.addressLine3"/>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" ng-model="employeeModel.address.addressLine4"/>
-                                    </div>
-
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="buttons-group col-sm-2">
                                     <button type="button" class="btn btn-primary" title="Add" ng-click="addEmployee()">+</button>
                                     <button type="button" class="btn btn-danger" title="Clear" ng-click="clearEmployeeForm()">-</button>
                                 </div>
