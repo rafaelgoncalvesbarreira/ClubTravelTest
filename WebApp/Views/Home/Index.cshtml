@@ -87,10 +87,11 @@
         <div class="modal-dialog modal-employee" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{companySelectedName}}'s employees</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                    <h4 class="modal-title">{{companySelectedName}}'s employees</h4>
+                    
                 </div>
                 <div class="modal-body">
 
@@ -103,11 +104,11 @@
                                 </div>
                                 <div class="form-group col-sm-3">
                                     <label for="employeeName">Start at Company</label>
-                                    <input name="employeeName" class="form-control" ng-model="employeeModel.employmentStartDate" />
+                                    <input type="date" name="employeeName" class="form-control" ng-model="employeeModel.employmentStartDate" />
                                 </div>
                                 <div class="form-group col-sm-3">
                                     <label for="employeeName">Left the company</label>
-                                    <input name="employeeName" class="form-control" ng-model="employeeModel.employmentEndDate" />
+                                    <input type="date" name="employeeName" class="form-control" ng-model="employeeModel.employmentEndDate" />
                                 </div>
                             </div>
 
@@ -158,7 +159,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" ng-click="save()">Save changes</button>
                 </div>
             </div>
 
